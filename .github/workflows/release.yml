@@ -1,0 +1,59 @@
+name: Release
+
+# Runs when you push a tag like v0.1.0, v0.2.0, etc.
+# Also manually triggerable from the Actions tab.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+# Grant the workflow permission to create releases
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    name: Build Windows installer
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build Tauri app (MSI + EXE installers)
+        # tauri-action handles: running tauri build, collecting artifacts,
+        # creating a draft GitHub Release, and uploading installers to it.
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: 'Roster ${{ github.ref_name }}'
+          releaseBody: |
+            ## Installing
+
+            Download the `.msi` file below and double-click to install.
+
+            **Windows SmartScreen note:** You'll see a "Windows protected your PC" warning because this installer isn't code-signed. Click "More info" → "Run anyway". This is expected for unsigned installers.
+
+            See the [README](../../blob/main/README.md) for what's new and how to use it.
+          releaseDraft: true
+          prerelease: false
