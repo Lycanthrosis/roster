@@ -14,7 +14,6 @@ export function NotesPanel({ candidateId }: NotesPanelProps) {
   const createNote = useCreateNote();
 
   const editorRef = useRef<NoteEditorHandle>(null);
-  const [draft, setDraft] = useState("");
   const [hasDraft, setHasDraft] = useState(false);
 
   const notes = notesQuery.data ?? [];
@@ -25,7 +24,6 @@ export function NotesPanel({ candidateId }: NotesPanelProps) {
     if (!plain) return;
     await createNote.mutateAsync({ candidateId, content: html });
     editorRef.current?.clear();
-    setDraft("");
     setHasDraft(false);
     editorRef.current?.focus();
   }
@@ -64,7 +62,6 @@ export function NotesPanel({ candidateId }: NotesPanelProps) {
   // When switching candidates, reset draft state
   useEffect(() => {
     editorRef.current?.clear();
-    setDraft("");
     setHasDraft(false);
   }, [candidateId]);
 
@@ -76,7 +73,6 @@ export function NotesPanel({ candidateId }: NotesPanelProps) {
           ref={editorRef}
           placeholder="Write a note… (Ctrl+Enter to save)"
           onChange={(html) => {
-            setDraft(html);
             setHasDraft(stripHtml(html).trim().length > 0);
           }}
           onSubmit={submitNote}
