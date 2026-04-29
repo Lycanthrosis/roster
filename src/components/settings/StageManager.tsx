@@ -110,7 +110,7 @@ export function StageManager() {
         <StageFormDialog
           open={creating}
           onOpenChange={setCreating}
-          nextOrder={(stages.at(-1)?.display_order ?? 0) + 10}
+          nextOrder={(stages[stages.length - 1]?.display_order ?? 0) + 10}
         />
       ) : null}
       {editing ? (

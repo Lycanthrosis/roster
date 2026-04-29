@@ -15,6 +15,14 @@ export interface Stage {
   created_at: ISODateTime;
 }
 
+/** Form input shape for creating a new stage. */
+export interface StageInput {
+  name: string;
+  display_order: number;
+  color: string;
+  is_terminal: boolean;
+}
+
 export interface Role {
   id: number;
   title: string;

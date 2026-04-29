@@ -156,11 +156,14 @@ function RequirementTypeDialog({
 
   async function handleSave() {
     if (!canSubmit) return;
+    // Category state can technically be null (None option in the picker), but
+    // the DB column is NOT NULL. Coerce to a sensible default at the boundary.
+    const safeCategory: RequirementCategory = category ?? "compliance";
     if (isEdit) {
       await update.mutateAsync({
         id: existing!.id,
         name,
-        category,
+        category: safeCategory,
         description: description || null,
         default_stage_id: null, // not surfaced in UI for now
         requires_expiration: requiresExpiration,
@@ -168,7 +171,7 @@ function RequirementTypeDialog({
     } else {
       await create.mutateAsync({
         name,
-        category,
+        category: safeCategory,
         description: description || null,
         default_stage_id: null,
         requires_expiration: requiresExpiration,
