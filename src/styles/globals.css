@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 222 47% 15%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 222 47% 15%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217 33% 14%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 14%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 14%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 45%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 217 33% 16%;
+    --input: 217 33% 16%;
+    --ring: 212 27% 84%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv11", "ss01";
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Native-feeling scrollbars */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 6px;
+    border: 2px solid hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  /* Tauri: disable text selection on chrome/UI, allow in content */
+  .no-select {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
+
+@layer components {
+  /* TipTap editor base styles */
+  .tiptap {
+    @apply outline-none;
+  }
+  .tiptap p.is-editor-empty:first-child::before {
+    @apply text-muted-foreground;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
+  /* Rendered note content — both live editor and read-only view */
+  .note-prose {
+    @apply text-sm leading-relaxed;
+  }
+  .note-prose p {
+    @apply my-1;
+  }
+  .note-prose p:first-child {
+    @apply mt-0;
+  }
+  .note-prose p:last-child {
+    @apply mb-0;
+  }
+  .note-prose h1 {
+    @apply mt-3 mb-1.5 text-base font-semibold;
+  }
+  .note-prose h2 {
+    @apply mt-3 mb-1.5 text-sm font-semibold uppercase tracking-wide;
+  }
+  .note-prose h3 {
+    @apply mt-2 mb-1 text-sm font-semibold;
+  }
+  .note-prose strong {
+    @apply font-semibold;
+  }
+  .note-prose em {
+    @apply italic;
+  }
+  .note-prose code {
+    @apply rounded bg-muted px-1 py-0.5 font-mono text-xs;
+  }
+  .note-prose ul {
+    @apply my-1 list-disc pl-5;
+  }
+  .note-prose ol {
+    @apply my-1 list-decimal pl-5;
+  }
+  .note-prose li {
+    @apply my-0.5;
+  }
+  .note-prose li p {
+    @apply my-0;
+  }
+  .note-prose a {
+    @apply text-primary underline underline-offset-2;
+  }
+  .note-prose blockquote {
+    @apply my-2 border-l-2 border-border pl-3 italic text-muted-foreground;
+  }
+
+  /* Task list (checkboxes) */
+  .note-prose ul[data-type="taskList"] {
+    @apply list-none pl-0;
+  }
+  .note-prose ul[data-type="taskList"] li {
+    @apply flex items-start gap-2;
+  }
+  .note-prose ul[data-type="taskList"] li > label {
+    @apply mt-1 flex-shrink-0;
+  }
+  .note-prose ul[data-type="taskList"] li > label > input[type="checkbox"] {
+    @apply h-3.5 w-3.5 cursor-pointer rounded border-border accent-primary;
+  }
+  .note-prose ul[data-type="taskList"] li > div {
+    @apply min-w-0 flex-1;
+  }
+  .note-prose ul[data-type="taskList"] li[data-checked="true"] > div {
+    @apply text-muted-foreground line-through;
+  }
+}
+
