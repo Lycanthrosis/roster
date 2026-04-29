@@ -4,6 +4,11 @@ A local-first desktop app for tracking a healthcare HR hiring pipeline. Built wi
 
 All data stays on your machine. No cloud sync, no telemetry, no accounts.
 
+<img width="1918" height="1030" alt="Screenshot 2026-04-29 152914" src="https://github.com/user-attachments/assets/bf7734c8-20b0-4f86-8f35-6e6e1abe0290" />
+<img width="1919" height="1030" alt="Screenshot 2026-04-29 152929" src="https://github.com/user-attachments/assets/616621db-043c-4e19-9059-dda788767bea" />
+<img width="1917" height="1029" alt="Screenshot 2026-04-29 153110" src="https://github.com/user-attachments/assets/8f6f354d-0b82-4d5b-baa6-e0dee1a686d8" />
+
+
 ## What it does
 
 - **Candidate records** — every field a healthcare HR coordinator typically tracks: name, contact, role, position type, employee type (Rehire/New Hire/Transfer), shift, position number, req number, location code, team ID, offer letter signed date, target start date, keyed date, occupational health status and appointment, recruiter info, compensation, manager info, last contact, onboarding specialist, and several onboarding-status flags
